@@ -5,23 +5,29 @@ class GraphEditor{
 
 		this.ctx = this.canvas.getContext("2d");
 
-		this.selected = null;
+		this.selectedPoint = null;
+		this.hoveredPoint = null;
 		
 		this.#addEventListener();
 	}
 
-	#addEventListener(){
+	#addEventListener() {
 		this.canvas.addEventListener("mousedown", (evt) => {
 			const mousePoint = new Point(evt.offsetX, evt.offsetY);
+			this.hoveredPoint = getNearestPoint(mousePoint, this.graph.points, 10);
+			if (this.hoveredPoint) {
+				this.selectedPoint = this.hoveredPoint;
+				return;
+			}
 			this.graph.addPoint(mousePoint);
-			this.selected = mousePoint;
+			this.selectedPoint = mousePoint;
 		});
 	}
 
 	display() {
 		this.graph.draw(this.ctx);
-		if(this.selected) {
-			this.selected.draw(this.ctx, {outline: true});
+		if(this.selectedPoint) {
+			this.selectedPoint.draw(this.ctx, {outline: true});
 		}
 	}
 }
