@@ -5,6 +5,10 @@ class Graph {
 		this.segments =  segments;
 	}
 
+	addPoint(point) {
+		this.points.push(point);
+	}
+
 	draw(ctx) {
 		for (const segment of this.segments) {
 			segment.draw(ctx);

@@ -8,10 +8,25 @@
 		<h1>World Editor</h1>
 		<canvas id="myCanvas"></canvas>
 	</body>
+	<div id="controls">
+		<button onclick="addRandomPoint()">Add Point</button>
+	</div>
 	<script src="js/maths/graph.js"></script>
 	<script src="js/primitives/point.js"></script>
 	<script src="js/primitives/segment.js"></script>
 	<script>
+		function addRandomPoint(){
+			graph.addPoint(
+				new Point(
+					Math.random() * myCanvas.width,
+					Math.random() * myCanvas.height
+				)
+			);
+			ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+			graph.draw(ctx);
+
+		}
+
 		myCanvas.width = 600;
 		myCanvas.height = 600;
 
