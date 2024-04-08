@@ -13,20 +13,40 @@ class GraphEditor{
 
 	#addEventListener() {
 		this.canvas.addEventListener("mousedown", (evt) => {
-			const mousePoint = new Point(evt.offsetX, evt.offsetY);
-			this.hoveredPoint = getNearestPoint(mousePoint, this.graph.points, 10);
-			if (this.hoveredPoint) {
-				this.selectedPoint = this.hoveredPoint;
-				return;
+
+			if (evt.button == 2 ){ // right click
+				if(this.hoveredPoint){
+					this.#removePoint(this.hoveredPoint);
+				}
 			}
-			this.graph.addPoint(mousePoint);
-			this.selectedPoint = mousePoint;
+
+			if( evt.button == 0) { // left click
+				const mousePoint = new Point(evt.offsetX, evt.offsetY);
+				if (this.hoveredPoint) {
+					this.selectedPoint = this.hoveredPoint;
+					return;
+				}
+				this.graph.addPoint(mousePoint);
+				this.selectedPoint = mousePoint;
+				this.hoveredPoint = mousePoint;
+			}
 		});
 
 		this.canvas.addEventListener("mousemove", (evt) => {
 			const mousePoint = new Point(evt.offsetX, evt.offsetY);
 			this.hoveredPoint = getNearestPoint(mousePoint, this.graph.points, 10);
 		});
+
+		this.canvas.addEventListener("contextmenu", (evt) => evt.preventDefault());
+	}
+
+	#removePoint(point){
+		this.graph.removePoint(point);
+		this.hoveredPoint = null;
+
+		if (this.selectedPoint ==  point){
+			this.selectedPoint = null;
+		}
 	}
 
 	display() {
