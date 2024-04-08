@@ -17,10 +17,10 @@ class GraphEditor{
 		this.canvas.addEventListener("mousedown", (evt) => {
 
 			if (evt.button == 2 ){ // right click
-				if(this.hoveredPoint){
-					this.#removePoint(this.hoveredPoint);
-				} else {
+				if(this.selectedPoint){
 					this.selectedPoint = null;
+				} else if (this.hoveredPoint){
+					this.#removePoint(this.hoveredPoint);
 				}
 			}
 
