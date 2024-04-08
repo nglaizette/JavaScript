@@ -22,12 +22,21 @@ class GraphEditor{
 			this.graph.addPoint(mousePoint);
 			this.selectedPoint = mousePoint;
 		});
+
+		this.canvas.addEventListener("mousemove", (evt) => {
+			const mousePoint = new Point(evt.offsetX, evt.offsetY);
+			this.hoveredPoint = getNearestPoint(mousePoint, this.graph.points, 10);
+		});
 	}
 
 	display() {
 		this.graph.draw(this.ctx);
+		if(this.hoveredPoint) {
+			this.hoveredPoint.draw(this.ctx, { fill: true});
+		}
+
 		if(this.selectedPoint) {
-			this.selectedPoint.draw(this.ctx, {outline: true});
+			this.selectedPoint.draw(this.ctx, { outline: true});
 		}
 	}
 }
