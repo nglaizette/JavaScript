@@ -14,43 +14,44 @@ class GraphEditor{
 	}
 
 	#addEventListener() {
-		this.canvas.addEventListener("mousedown", (evt) => {
-
-			if (evt.button == 2 ){ // right click
-				if(this.selectedPoint){
-					this.selectedPoint = null;
-				} else if (this.hoveredPoint){
-					this.#removePoint(this.hoveredPoint);
-				}
-			}
-
-			if( evt.button == 0) { // left click
-				if (this.hoveredPoint) {
-					this.#select(this.hoveredPoint);
-					this.dragging = true;
-					return;
-				}
-				this.graph.addPoint(this.mousePoint);
-
-				this.#select(this.mousePoint);
-				this.hoveredPoint = this.mousePoint;
-			}
-		});
-
-		this.canvas.addEventListener("mousemove", (evt) => {
-			this.mousePoint = new Point(evt.offsetX, evt.offsetY);
-			this.hoveredPoint = getNearestPoint(this.mousePoint, this.graph.points, 10);
-
-			if(this.dragging) {
-				this.selectedPoint.x = this.mousePoint.x;
-				this.selectedPoint.y = this.mousePoint.y;
-			}
-		});
+		this.canvas.addEventListener("mousedown", this.#handleMouseDown.bind(this));
+		this.canvas.addEventListener("mousemove", this.#handleMouveMove.bind(this));
 
 		this.canvas.addEventListener("contextmenu", (evt) => evt.preventDefault());
 		this.canvas.addEventListener("mouseup", () => this.dragging = false);
 	}
 
+	#handleMouseDown(event) {
+		if ( event.button == 2 ){ // right click
+			if(this.selectedPoint){
+				this.selectedPoint = null;
+			} else if (this.hoveredPoint){
+				this.#removePoint(this.hoveredPoint);
+			}
+		}
+
+		if( event.button == 0) { // left click
+			if (this.hoveredPoint) {
+				this.#select(this.hoveredPoint);
+				this.dragging = true;
+				return;
+			}
+			this.graph.addPoint(this.mousePoint);
+
+			this.#select(this.mousePoint);
+			this.hoveredPoint = this.mousePoint;
+		}
+	}
+
+	#handleMouveMove(event) {
+		this.mousePoint = new Point(event.offsetX, event.offsetY);
+		this.hoveredPoint = getNearestPoint(this.mousePoint, this.graph.points, 10);
+
+		if(this.dragging) {
+			this.selectedPoint.x = this.mousePoint.x;
+			this.selectedPoint.y = this.mousePoint.y;
+		}
+	}
 	#select(point) {
 		if(this.selectedPoint){
 			this.graph.tryAddSegment(new Segment(this.selectedPoint, point));
