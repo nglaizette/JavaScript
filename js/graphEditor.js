@@ -26,19 +26,13 @@ class GraphEditor{
 			if( evt.button == 0) { // left click
 				const mousePoint = new Point(evt.offsetX, evt.offsetY);
 				if (this.hoveredPoint) {
-					if(this.selectedPoint){
-						this.graph.tryAddSegment(new Segment(this.selectedPoint, this.hoveredPoint));
-					}
-					this.selectedPoint = this.hoveredPoint;
+					this.#select(this.hoveredPoint);
 					this.dragging = true;
 					return;
 				}
 				this.graph.addPoint(mousePoint);
 
-				if(this.selectedPoint){
-					this.graph.tryAddSegment(new Segment(this.selectedPoint, mousePoint));
-				}
-				this.selectedPoint = mousePoint;
+				this.#select(mousePoint);
 				this.hoveredPoint = mousePoint;
 			}
 		});
