@@ -18,17 +18,26 @@ class GraphEditor{
 			if (evt.button == 2 ){ // right click
 				if(this.hoveredPoint){
 					this.#removePoint(this.hoveredPoint);
+				} else {
+					this.selectedPoint = null;
 				}
 			}
 
 			if( evt.button == 0) { // left click
 				const mousePoint = new Point(evt.offsetX, evt.offsetY);
 				if (this.hoveredPoint) {
+					if(this.selectedPoint){
+						this.graph.tryAddSegment(new Segment(this.selectedPoint, this.hoveredPoint));
+					}
 					this.selectedPoint = this.hoveredPoint;
 					this.dragging = true;
 					return;
 				}
 				this.graph.addPoint(mousePoint);
+
+				if(this.selectedPoint){
+					this.graph.tryAddSegment(new Segment(this.selectedPoint, mousePoint));
+				}
 				this.selectedPoint = mousePoint;
 				this.hoveredPoint = mousePoint;
 			}
@@ -46,6 +55,13 @@ class GraphEditor{
 
 		this.canvas.addEventListener("contextmenu", (evt) => evt.preventDefault());
 		this.canvas.addEventListener("mouseup", () => this.dragging = false);
+	}
+
+	#select(point) {
+		if(this.selectedPoint){
+			this.graph.tryAddSegment(new Segment(this.selectedPoint, point));
+		}
+		this.selectedPoint = point;
 	}
 
 	#removePoint(point){
