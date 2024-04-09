@@ -70,6 +70,12 @@ class GraphEditor{
 		}
 	}
 
+	dispose() {
+		this.graph.dispose();
+		this.selectedPoint = null;
+		this.hoveredPoint = null;
+	}
+
 	display() {
 		this.graph.draw(this.ctx);
 		if(this.hoveredPoint) {

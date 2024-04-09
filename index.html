@@ -9,6 +9,8 @@
 		<canvas id="myCanvas"></canvas>
 	</body>
 	<div id="controls">
+		<button onclick="dispose()">🗑️</button>
+		<button onclick="save()">💾</button>
 	</div>
 	<script src="js/graphEditor.js"></script>
 	<script src="js/viewport.js"></script>
@@ -43,6 +45,14 @@
 			viewport.reset();
 			graphEditor.display();
 			requestAnimationFrame(animate);
-		} 
+		}
+
+		function dispose(){
+			graphEditor.dispose();
+		}
+
+		function save(){
+			localStorage.setItem("graph", JSON.stringify(graph));
+		}
 	</script>
 </html>
