@@ -20,10 +20,21 @@ function add(point1, point2){
 	return new Point(point1.x + point2.x, point1.y + point2.y);
 }
 
-function subsract(point1, point2){
+function substract(point1, point2){
 	return new Point(point1.x - point2.x, point1.y - point2.y);
 }
 
 function scale(point, scaler){
 	return new Point( point.x * scaler, point.y * scaler);
+}
+
+function translate(loc, angle, offset) {
+	return new Point(
+		loc.x + Math.cos(angle) * offset,
+		loc.y + Math.sin(angle) * offset
+	);
+}
+
+function angle(point){
+	return Math.atan2(point.y, point.x);
 }

@@ -33,7 +33,7 @@ class Viewport {
 			(event.offsetY - this.center.y) * this.zoom - this.offset.y
 		);
 
-		return subtractDragOffset ? subsract(point, this.drag.offset) : point;
+		return subtractDragOffset ? substract(point, this.drag.offset) : point;
 	}
 
 	getOffset() {
@@ -57,7 +57,7 @@ class Viewport {
 	#handleMouseMove(event) {
 		if(this.drag.active){
 			this.drag.end = this.getMousePoint(event);
-			this.drag.offset = subsract(this.drag.end, this.drag.start);
+			this.drag.offset = substract(this.drag.end, this.drag.start);
 		}
 	}
 
