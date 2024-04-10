@@ -16,11 +16,12 @@ class Envelope {
 		
 		const pointsAroundPoint1 = [];
 		const step = Math.PI / Math.max(1, roundness); // pour éviter une division par zéro
-		for(let i = alpha_counterclockwise; i <= alpha_clockwise; i += step){
+		const epsilon = step / 2;
+		for(let i = alpha_counterclockwise; i <= alpha_clockwise + epsilon; i += step){
 			pointsAroundPoint1.push(translate(point1, i, radius));
 		}
 
-		for(let i = alpha_counterclockwise; i <= alpha_clockwise; i += step){
+		for(let i = alpha_counterclockwise; i <= alpha_clockwise + epsilon; i += step){
 			pointsAroundPoint1.push(translate(point2, Math.PI + i, radius));
 		}
 		return new Polygon(pointsAroundPoint1);
