@@ -1,10 +1,10 @@
 class Envelope {
-	constructor(skeleton, width){
+	constructor(skeleton, width, roundness = 30){
 		this.skeleton = skeleton;
-		this.polygon = this.#generatePolygon(width);
+		this.polygon = this.#generatePolygon(width, roundness);
 	}
 
-	#generatePolygon(width) {
+	#generatePolygon(width, roundness) {
 		const { point1, point2} = this.skeleton;
 		
 		const radius = width / 2;
@@ -13,12 +13,17 @@ class Envelope {
 		const alpha_clockwise = alpha + Math.PI / 2.0;
 		const alpha_counterclockwise = alpha - Math.PI / 2.0;
 
-		const point1_counterclockwise = translate(point1, alpha_counterclockwise, radius);
-		const point2_counterclockwise = translate(point2, alpha_counterclockwise, radius);
-		const point2_clockwise = translate(point2, alpha_clockwise, radius);
-		const point1_clockwise = translate(point1, alpha_clockwise, radius);
+		
+		const pointsAroundPoint1 = [];
+		const step = Math.PI / Math.max(1, roundness); // pour éviter une division par zéro
+		for(let i = alpha_counterclockwise; i <= alpha_clockwise; i += step){
+			pointsAroundPoint1.push(translate(point1, i, radius));
+		}
 
-		return new Polygon([point1_counterclockwise, point2_counterclockwise, point2_clockwise, point1_clockwise]);
+		for(let i = alpha_counterclockwise; i <= alpha_clockwise; i += step){
+			pointsAroundPoint1.push(translate(point2, Math.PI + i, radius));
+		}
+		return new Polygon(pointsAroundPoint1);
 	}
 
 	draw(ctx) {
