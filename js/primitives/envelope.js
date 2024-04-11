@@ -27,8 +27,7 @@ class Envelope {
 		return new Polygon(pointsAroundPoint1);
 	}
 
-	draw(ctx) {
-		this.polygon.draw(ctx);
-		this.polygon.drawSegments(ctx);
+	draw(ctx, options) {
+		this.polygon.draw(ctx, options);
 	}
 }

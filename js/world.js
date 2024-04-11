@@ -23,8 +23,11 @@ class World {
 
 	draw(ctx) {
 		for (const envelope of this.envelopes){
-			envelope.draw(ctx);
+			envelope.draw(ctx, {fill: "#BBB", stroke: "#BBB", lineWidth: 15});
 		}
+		for (const segment of this.graph.segments) {
+			segment.draw(ctx, { color: "white", width: 4, dash: [10, 10] });
+		 }
 
 		for(const segment of this.roadBoarders){
 			segment.draw(ctx, {color: "white", width: "4"});
