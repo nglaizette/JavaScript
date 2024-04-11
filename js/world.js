@@ -17,10 +17,7 @@ class World {
 			);
 		}
 
-		Polygon.break(
-			this.envelopes[0].polygon,
-			this.envelopes[1].polygon
-		);
+		Polygon.multiBreak(this.envelopes.map((envelope) => envelope.polygon));
 	}
 
 	draw(ctx) {
