@@ -16,11 +16,20 @@ class World {
 				new Envelope(segment, this.roadWith, this.roadRoundness)
 			);
 		}
+
+		this.intersections = Polygon.break(
+			this.envelopes[0].polygon,
+			this.envelopes[1].polygon
+		);
 	}
 
 	draw(ctx) {
 		for (const envelope of this.envelopes){
 			envelope.draw(ctx);
+		}
+
+		for (const intersection of this.intersections){
+			intersection.draw(ctx, {color: "red", size: 6});
 		}
 	}
 }

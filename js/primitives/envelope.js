@@ -29,5 +29,6 @@ class Envelope {
 
 	draw(ctx) {
 		this.polygon.draw(ctx);
+		this.polygon.drawSegments(ctx);
 	}
 }
