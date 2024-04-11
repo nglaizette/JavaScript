@@ -14,7 +14,6 @@ class Polygon {
 		const segment1 = polygon1.segments;
 		const segment2 = polygon2.segments;
 
-		const intersections = [];
 		for(let i = 0; i  < segment1.length; i++){
 			for(let j = 0; j < segment2.length; j++){
 				const intersection = getIntersection(
@@ -23,7 +22,6 @@ class Polygon {
 
 				if(intersection && intersection.offset !=1 && intersection.offset != 0){
 					const point = new Point(intersection.x, intersection.y);
-					intersections.push(point);
 
 					// on coupe les segments qui s'intersectent en deux
 					// au point d'intersection
@@ -39,13 +37,11 @@ class Polygon {
 				}
 			}
 		}
-
-		return intersections;
 	}
 
 	drawSegments(ctx) {
 		for(const segment of this.segments){
-			segment.draw(ctx, {color: getRandomColor()});
+			segment.draw(ctx, {color: getRandomColor(), width: 5});
 		}
 	}
 

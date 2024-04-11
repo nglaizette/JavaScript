@@ -27,9 +27,5 @@ class World {
 		for (const envelope of this.envelopes){
 			envelope.draw(ctx);
 		}
-
-		for (const intersection of this.intersections){
-			intersection.draw(ctx, {color: "red", size: 6});
-		}
 	}
 }
