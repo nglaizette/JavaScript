@@ -10,6 +10,29 @@ class Polygon {
 		}
 	}
 
+	static union(polygons){
+		Polygon.multiBreak(polygons);
+		const keptSegments = [];
+		for(let i = 0; i < polygons.length; i++){
+			for(const segment of polygons[i].segments){
+				let keep = true;
+				for(let j = 0; j < polygons.length; j++){
+					if( i != j){
+						if(polygons[j].containsSegment(segment)){
+							keep = false;
+							break;
+						}
+					}
+				}
+
+				if(keep){
+					keptSegments.push(segment);
+				}
+			}
+		}
+		return keptSegments;
+	}
+
 	static multiBreak(polygons){
 		for(let i = 0; i < polygons.length - 1; i++){
 			for(let j = i + 1; j < polygons.length; j++){
@@ -45,6 +68,28 @@ class Polygon {
 				}
 			}
 		}
+	}
+
+	// Achtung! possible que de vérifier le point du mileu est dans le segment
+	// ne marche pas dans le cas général, dans notre cas ça fonctionne
+	containsSegment(segment){
+		const midpoint = averagePoint(segment.point1, segment.point2);
+		return this.containsPoint(midpoint);
+	}
+
+	// Si le segment point -point très loin coupe un nombre impair 
+	//de fois l'enveloppe, alors il est dedans; sinon il est dehors
+	containsPoint(point) {
+		const farOuterPoint = new Point(-1000, -1000);
+		let intersectionNumber = 0;
+		for( const segment of this.segments){
+			const intersection = getIntersection(farOuterPoint, point, segment.point1, segment.point2);
+			if(intersection){
+				intersectionNumber++;
+			}
+		}
+
+		return intersectionNumber % 2 == 1;
 	}
 
 	drawSegments(ctx) {
