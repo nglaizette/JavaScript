@@ -17,7 +17,7 @@ class World {
 			);
 		}
 
-		this.intersections = Polygon.break(
+		Polygon.break(
 			this.envelopes[0].polygon,
 			this.envelopes[1].polygon
 		);
