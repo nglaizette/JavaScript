@@ -1,24 +1,26 @@
-class World {
-	constructor(graph,
+class 	World {
+	constructor(
+		graph,
 		roadWith = 100,
 		roadRoundness = 10,
 		buildingWidth = 150,
 		buildingMinLength = 150,
 		spacing = 50
-		){
-		this.graph = graph;
-		this.roadWith = roadWith;
-		this.roadRoundness = roadRoundness;
-		this.buildingWidth = buildingWidth;
-		this.buildingMinLength = buildingMinLength;
-		this.spacing = spacing;
+		) {
+			this.graph = graph;
+			this.roadWith = roadWith;
+			this.roadRoundness = roadRoundness;
+			this.buildingWidth = buildingWidth;
+			this.buildingMinLength = buildingMinLength;
+			this.spacing = spacing;
 
-		this.envelopes = [];
-		this.roadBoarders = [];
-		this.buildings = [];
+			this.envelopes = [];
+			this.roadBoarders = [];
+			this.buildings = [];
+			this.trees = [];
 
-		this.generate();
-	}
+			this.generate();
+		}
 
 	generate() {
 		this.envelopes.length = 0;
@@ -30,6 +32,29 @@ class World {
 
 		this.roadBoarders= Polygon.union(this.envelopes.map((envelope) => envelope.polygon));
 		this.buildings = this.#generateBuildings();
+		this.trees = this.#generateTrees();
+	}
+
+	#generateTrees(count = 10) {
+		const points = [
+			...this.roadBoarders.map( (segment) => [segment.point1, segment.point2]).flat(),
+			...this.buildings.map( (building) => building.points).flat(),
+		];
+ 
+		const left = Math.min(...points.map((p) => p.x));
+		const right = Math.max(...points.map((point) => point.x));
+		const top = Math.min(...points.map((point) => point.y));
+		const bottom = Math.max(...points.map((point) => point.y));
+
+		const trees = [];
+		while (trees.length < count){
+			const point = new Point(
+				lerp(left, right, Math.random()),
+				lerp(bottom, top, Math.random())
+			);
+			trees.push(point);
+		}
+		return trees;
 	}
 
 	#generateBuildings(){
@@ -107,6 +132,10 @@ class World {
 
 		for(const building of this.buildings){
 			building.draw(ctx);
+		}
+
+		for(const tree of this.trees){
+			tree.draw(ctx);
 		}
 	}
 }
