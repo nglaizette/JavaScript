@@ -54,7 +54,28 @@ class World {
 			}
 		}
 
-		return guides;
+		const supports = [];
+		for(let segment of guides){
+			const totalLength = segment.length() + this.spacing; // on considère un espace au bout du segment car on considère qu'un batiment est sa longuer + l'espace.
+			const buildingCount = Math.floor(
+				totalLength / (this.buildingMinLength + this.spacing)
+			);
+			const buildingLength = totalLength / buildingCount - this.spacing;
+
+			const direction = segment.directionVector();
+
+			let q1 = segment.point1;
+			let q2 = add(q1, scale(direction, buildingLength));
+			supports.push(new Segment(q1, q2));
+
+			for(let i = 2; i <= buildingCount; i++){
+				q1 = add(q2, scale(direction, this.spacing));
+				q2 = add(q1, scale(direction, buildingLength));
+				supports.push(new Segment(q1, q2));
+			}
+		}
+
+		return supports;
 	}
 
 	draw(ctx) {

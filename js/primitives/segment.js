@@ -8,6 +8,10 @@ class Segment {
 		return distance(this.point1, this.point2);
 	}
 
+	directionVector(){
+		return normalize(substract(this.point2, this.point1));
+	}
+
 	equals(segment) {
 		return this.includes(segment.point1) && this.includes(segment.point2);
 	}
