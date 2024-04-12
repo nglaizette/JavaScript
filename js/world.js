@@ -1,11 +1,21 @@
 class World {
-	constructor(graph, roadWith = 100, roadRoundness = 10){
+	constructor(graph,
+		roadWith = 100,
+		roadRoundness = 10,
+		buildingWidth = 150,
+		buildingMinLength = 150,
+		spacing = 50
+		){
 		this.graph = graph;
 		this.roadWith = roadWith;
 		this.roadRoundness = roadRoundness;
+		this.buildingWidth = buildingWidth;
+		this.buildingMinLength = buildingMinLength;
+		this.spacing = spacing;
 
 		this.envelopes = [];
 		this.roadBoarders = [];
+		this.buildings = [];
 
 		this.generate();
 	}
@@ -19,6 +29,11 @@ class World {
 		}
 
 		this.roadBoarders= Polygon.union(this.envelopes.map((envelope) => envelope.polygon));
+		this.buildings = this.#generateBuildings();
+	}
+
+	#generateBuildings(){
+
 	}
 
 	draw(ctx) {
