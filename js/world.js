@@ -33,7 +33,17 @@ class World {
 	}
 
 	#generateBuildings(){
-
+		const tmpEnvelopes = [];
+		for(const segment of this.graph.segments){
+			tmpEnvelopes.push(
+				new Envelope(
+					segment,
+					this.roadWith + this.buildingWidth + this.spacing * 2,
+					this.roadRoundness
+				)
+			);
+		}
+		return tmpEnvelopes;
 	}
 
 	draw(ctx) {
@@ -46,6 +56,10 @@ class World {
 
 		for(const segment of this.roadBoarders){
 			segment.draw(ctx, {color: "white", width: "4"});
+		}
+
+		for(const building of this.buildings){
+			building.draw(ctx);
 		}
 	}
 }
