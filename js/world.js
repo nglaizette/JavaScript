@@ -80,6 +80,16 @@ class World {
 			bases.push(new Envelope(segment, this.buildingWidth, 1).polygon);
 		}
 
+		// suppressions des bases s'intersectant:
+		for(let i = 0; i < bases.length - 1; i++){
+			for(let j = i + 1; j < bases.length; j++){
+				if(bases[i].intersectsPolygon(bases[j])){
+					bases.splice(j, 1);
+					j--;
+				}
+			}
+		}
+
 		return bases;
 	}
 

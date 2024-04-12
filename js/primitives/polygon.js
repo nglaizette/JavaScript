@@ -70,6 +70,17 @@ class Polygon {
 		}
 	}
 
+	intersectsPolygon(polygon){
+		for(let segment1 of this.segments){
+			for(let segment2 of polygon.segments){
+				if(getIntersection(segment1.point1, segment1.point2, segment2.point1, segment2.point2)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	// Achtung! possible que de vérifier le point du mileu est dans le segment
 	// ne marche pas dans le cas général, dans notre cas ça fonctionne
 	containsSegment(segment){
