@@ -5,7 +5,8 @@ class 	World {
 		roadRoundness = 10,
 		buildingWidth = 150,
 		buildingMinLength = 150,
-		spacing = 50
+		spacing = 50,
+		treeSize = 160
 		) {
 			this.graph = graph;
 			this.roadWith = roadWith;
@@ -13,6 +14,7 @@ class 	World {
 			this.buildingWidth = buildingWidth;
 			this.buildingMinLength = buildingMinLength;
 			this.spacing = spacing;
+			this.treeSize = treeSize;
 
 			this.envelopes = [];
 			this.roadBoarders = [];
@@ -65,6 +67,15 @@ class 	World {
 				if(polygon.containsPoint(point)){
 					keep = false;
 					break;
+				}
+			}
+
+			if(keep) {
+				for(const tree of trees){
+					if(distance(tree, point) < this.treeSize) {
+						keep = false;
+						break;
+					}
 				}
 			}
 
@@ -148,12 +159,12 @@ class 	World {
 			segment.draw(ctx, {color: "white", width: "4"});
 		}
 
-		for(const building of this.buildings){
-			building.draw(ctx);
+		for(const tree of this.trees){
+			tree.draw(ctx, {size : this.treeSize, color: "rgba(0,0,0,0.5)"});
 		}
 
-		for(const tree of this.trees){
-			tree.draw(ctx);
+		for(const building of this.buildings){
+			building.draw(ctx);
 		}
 	}
 }
