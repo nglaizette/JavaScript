@@ -170,7 +170,7 @@ class 	World {
 		return bases;
 	}
 
-	draw(ctx) {
+	draw(ctx, viewPoint) {
 		for (const envelope of this.envelopes){
 			envelope.draw(ctx, {fill: "#BBB", stroke: "#BBB", lineWidth: 15});
 		}
@@ -183,7 +183,7 @@ class 	World {
 		}
 
 		for(const tree of this.trees){
-			tree.draw(ctx);
+			tree.draw(ctx, viewPoint);
 		}
 
 		for(const building of this.buildings){
