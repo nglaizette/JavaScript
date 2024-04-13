@@ -58,12 +58,15 @@ class 	World {
 
 		const trees = [];
 		let tryCount = 0;
+
 		while (tryCount < 100){
 			const point = new Point(
 				lerp(left, right, Math.random()),
 				lerp(bottom, top, Math.random())
 			);
 			let keep = true;
+
+			// check if tree inside or nearby building / road
 			for(const polygon of illegalPolygons){
 				if(polygon.containsPoint(point)|| polygon.distanceToPoint(point) < this.treeSize / 2.0){
 					keep = false;
@@ -71,6 +74,7 @@ class 	World {
 				}
 			}
 
+			// check if tree too close to other trees
 			if(keep) {
 				for(const tree of trees){
 					if(distance(tree, point) < this.treeSize * 2) {
@@ -80,6 +84,7 @@ class 	World {
 				}
 			}
 
+			// Avoiding trees in the middle of nowhere
 			if(keep){
 				let closeToSomething = false;
 				for(const polygon of illegalPolygons){
