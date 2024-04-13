@@ -77,7 +77,7 @@ class 	World {
 			// check if tree too close to other trees
 			if(keep) {
 				for(const tree of trees){
-					if(distance(tree, point) < this.treeSize * 2) {
+					if(distance(tree.center, point) < this.treeSize * 2) {
 						keep = false;
 						break;
 					}
@@ -97,7 +97,7 @@ class 	World {
 			}
 
 			if(keep){
-				trees.push(point);
+				trees.push(new Tree(point, this.treeSize));
 				tryCount = 0;
 			}
 			tryCount++;
@@ -183,7 +183,7 @@ class 	World {
 		}
 
 		for(const tree of this.trees){
-			tree.draw(ctx, {size : this.treeSize, color: "rgba(0,0,0,0.5)"});
+			tree.draw(ctx);
 		}
 
 		for(const building of this.buildings){
