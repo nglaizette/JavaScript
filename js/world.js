@@ -73,11 +73,22 @@ class 	World {
 
 			if(keep) {
 				for(const tree of trees){
-					if(distance(tree, point) < this.treeSize) {
+					if(distance(tree, point) < this.treeSize * 2) {
 						keep = false;
 						break;
 					}
 				}
+			}
+
+			if(keep){
+				let closeToSomething = false;
+				for(const polygon of illegalPolygons){
+					if(polygon.distanceToPoint(point) < this.treeSize * 2.0){
+						closeToSomething = true;
+						break;
+					}
+				}
+				keep = closeToSomething;
 			}
 
 			if(keep){
