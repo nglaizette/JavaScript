@@ -30,9 +30,5 @@ class Tree {
 			const polygon = this.#generateLevelPolygon(point, size);
 			polygon.draw(ctx, {fill: color, stroke: "rgba(0,0,0,0)"})
 		}
-
-		this.base.draw(ctx);
 	}
-
-
 }
