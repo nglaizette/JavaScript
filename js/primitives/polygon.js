@@ -70,6 +70,10 @@ class Polygon {
 		}
 	}
 
+	distanceToPoint(point){
+		return Math.min(...this.segments.map((segment) => segment.distanceToPoint(point)));
+	}
+
 	intersectsPolygon(polygon){
 		for(let segment1 of this.segments){
 			for(let segment2 of polygon.segments){

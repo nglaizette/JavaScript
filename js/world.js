@@ -64,7 +64,7 @@ class 	World {
 			);
 			let keep = true;
 			for(const polygon of illegalPolygons){
-				if(polygon.containsPoint(point)){
+				if(polygon.containsPoint(point)|| polygon.distanceToPoint(point) < this.treeSize / 2.0){
 					keep = false;
 					break;
 				}
