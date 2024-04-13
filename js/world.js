@@ -154,9 +154,13 @@ class 	World {
 		}
 
 		// suppressions des bases s'intersectant:
+		const epsilon = 0.001;
 		for(let i = 0; i < bases.length - 1; i++){
 			for(let j = i + 1; j < bases.length; j++){
-				if(bases[i].intersectsPolygon(bases[j])){
+				if(
+					bases[i].intersectsPolygon(bases[j])||
+					bases[i].distanceToPolygon(bases[j]) < this.spacing - epsilon
+				){
 					bases.splice(j, 1);
 					j--;
 				}
