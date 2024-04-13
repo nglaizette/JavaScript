@@ -36,6 +36,8 @@ class 	World {
 	}
 
 	#generateTrees(count = 10) {
+		
+		// récupéation de tous les points utilisés
 		const points = [
 			...this.roadBoarders.map( (segment) => [segment.point1, segment.point2]).flat(),
 			...this.buildings.map( (building) => building.points).flat(),
@@ -46,13 +48,29 @@ class 	World {
 		const top = Math.min(...points.map((point) => point.y));
 		const bottom = Math.max(...points.map((point) => point.y));
 
+		// récupéreation de tous les polygones créés
+		const illegalPolygons = [
+			...this.buildings,
+			...this.envelopes.map((envelope) => envelope.polygon)
+		];
+
 		const trees = [];
 		while (trees.length < count){
 			const point = new Point(
 				lerp(left, right, Math.random()),
 				lerp(bottom, top, Math.random())
 			);
-			trees.push(point);
+			let keep = true;
+			for(const polygon of illegalPolygons){
+				if(polygon.containsPoint(point)){
+					keep = false;
+					break;
+				}
+			}
+
+			if(keep){
+				trees.push(point);
+			}
 		}
 		return trees;
 	}
