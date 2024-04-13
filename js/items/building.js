@@ -19,6 +19,12 @@ class Building {
 			]);
 			sides.push(polygon);
 		}
+
+		sides.sort((side1, side2) =>
+			side2.distanceToPoint(viewPoint) -
+			side1.distanceToPoint(viewPoint)
+		);
+
 		this.base.draw(ctx, { fill: "white", stroke: "#AAA"});
 		for(const side of sides){
 			side.draw(ctx, {fill: "while", stroke: "#AAA"});
