@@ -3,6 +3,7 @@ class Tree {
 		this.center = center;
 		this.size = size; // size of the base
 		this.heightCoefficient = heightCoefficient
+		this.base = this.#generateLevelPolygon(center, size);
 	}
 
 	#generateLevelPolygon(point, size){
@@ -29,6 +30,8 @@ class Tree {
 			const polygon = this.#generateLevelPolygon(point, size);
 			polygon.draw(ctx, {fill: color, stroke: "rgba(0,0,0,0)"})
 		}
+
+		this.base.draw(ctx);
 	}
 
 
