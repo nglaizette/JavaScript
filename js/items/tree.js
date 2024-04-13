@@ -9,7 +9,8 @@ class Tree {
 		const points = [];
 		const radius = size / 2;
 		for(let angle = 0; angle < Math.PI * 2; angle += Math.PI / 16){
-			const noisyRadius = radius * lerp(0.5, 1, Math.random());
+			const kindOfRandom = Math.cos(((angle + this.center.x) * size) % 17) ** 2;
+			const noisyRadius = radius * lerp(0.5, 1, kindOfRandom);
 			points.push(translate(point, angle, noisyRadius));
 		}
 
