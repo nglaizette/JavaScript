@@ -37,7 +37,7 @@ class 	World {
 		this.trees = this.#generateTrees();
 	}
 
-	#generateTrees(count = 10) {
+	#generateTrees() {
 		
 		// récupéation de tous les points utilisés
 		const points = [
@@ -57,7 +57,8 @@ class 	World {
 		];
 
 		const trees = [];
-		while (trees.length < count){
+		let tryCount = 0;
+		while (tryCount < 100){
 			const point = new Point(
 				lerp(left, right, Math.random()),
 				lerp(bottom, top, Math.random())
@@ -81,7 +82,9 @@ class 	World {
 
 			if(keep){
 				trees.push(point);
+				tryCount = 0;
 			}
+			tryCount++;
 		}
 		return trees;
 	}
