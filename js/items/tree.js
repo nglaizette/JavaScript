@@ -5,6 +5,17 @@ class Tree {
 		this.heightCoefficient = heightCoefficient
 	}
 
+	#generateLevelPolygon(point, size){
+		const points = [];
+		const radius = size / 2;
+		for(let angle = 0; angle < Math.PI * 2; angle += Math.PI / 16){
+			const noisyRadius = radius * lerp(0.5, 1, Math.random());
+			points.push(translate(point, angle, noisyRadius));
+		}
+
+		return new Polygon(points);
+	}
+
 	draw(ctx, viewPoint) {
 		const difference = substract(this.center, viewPoint);
 		const top = add(this.center, scale(difference, this.heightCoefficient));
@@ -14,10 +25,10 @@ class Tree {
 			const point = lerp2D(this.center, top, t);
 			const color = "rgb(30, " + lerp(50, 200, t) + ",70)";
 			const size = lerp(this.size, 40, t); // 40 paramètre au pif qui rend bien!
-			point.draw(ctx, {size, color});
+			const polygon = this.#generateLevelPolygon(point, size);
+			polygon.draw(ctx, {fill: color, stroke: "rgba(0,0,0,0)"})
 		}
-		new Segment(this.center, top).draw(ctx);
-
-
 	}
+
+
 }
