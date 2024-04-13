@@ -42,7 +42,7 @@ class 	World {
 		// récupéation de tous les points utilisés
 		const points = [
 			...this.roadBoarders.map( (segment) => [segment.point1, segment.point2]).flat(),
-			...this.buildings.map( (building) => building.points).flat(),
+			...this.buildings.map( (building) => building.base.points).flat(),
 		];
  
 		const left = Math.min(...points.map((p) => p.x));
@@ -52,7 +52,7 @@ class 	World {
 
 		// récupéreation de tous les polygones créés
 		const illegalPolygons = [
-			...this.buildings,
+			...this.buildings.map((building) => building.base),
 			...this.envelopes.map((envelope) => envelope.polygon)
 		];
 
@@ -167,7 +167,7 @@ class 	World {
 			}
 		}
 
-		return bases;
+		return bases.map((base) => new Building(base));
 	}
 
 	draw(ctx, viewPoint) {
@@ -187,7 +187,7 @@ class 	World {
 		}
 
 		for(const building of this.buildings){
-			building.draw(ctx);
+			building.draw(ctx, viewPoint);
 		}
 	}
 }
