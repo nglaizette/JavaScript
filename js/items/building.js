@@ -35,14 +35,14 @@ class Building {
 		);
 
 		const roofPolygons = [
-			new Polygon(
+			new Polygon([
 				ceiling.points[0], ceiling.points[3],
 				topMidPoints[1], topMidPoints[0]
-			),
-			new Polygon(
+			]),
+			new Polygon([
 				ceiling.points[2], ceiling.points[1],
 				topMidPoints[0], topMidPoints[1]
-			),
+			]),
 		];
 
 		roofPolygons.sort((a, b)=>
@@ -55,5 +55,8 @@ class Building {
 			side.draw(ctx, {fill: "while", stroke: "#AAA"});
 		}
 		ceiling.draw(ctx, { fill: "white", stroke: "#AAA", lineWidth: 6});
+		for(const roof of roofPolygons){
+			roof.draw(ctx, {fill: "#D44", stroke: "#C44", lineWidth: 8, join: "round"})
+		}
 	}
 }
