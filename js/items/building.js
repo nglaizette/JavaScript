@@ -1,12 +1,12 @@
 class Building {
-	constructor(polygon, heightCoefficient = 0.4){
+	constructor(polygon, height = 200){
 		this.base = polygon;
-		this.heightCoefficient = heightCoefficient;
+		this.height = height;
 	}
 
 	draw(ctx, viewPoint) {
 		const topPoints = this.base.points.map((point) => 
-			add(point, scale(substract(point, viewPoint), this.heightCoefficient))
+			getFake3dPoint(point, viewPoint, this.height * 0.6)
 		);
 		const ceiling = new Polygon(topPoints);
 
