@@ -54,6 +54,6 @@ class Building {
 		for(const side of sides){
 			side.draw(ctx, {fill: "while", stroke: "#AAA"});
 		}
-		ceiling.draw(ctx, { fill: "white", stroke: "#AAA"});
+		ceiling.draw(ctx, { fill: "white", stroke: "#AAA", lineWidth: 6});
 	}
 }
