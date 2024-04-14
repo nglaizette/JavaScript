@@ -11,16 +11,38 @@ class GraphEditor{
 		this.hoveredPoint = null;
 		this.dragging = false;
 		this.mousePoint = null;
-		
-		this.#addEventListener();
 	}
 
-	#addEventListener() {
-		this.canvas.addEventListener("mousedown", this.#handleMouseDown.bind(this));
-		this.canvas.addEventListener("mousemove", this.#handleMouveMove.bind(this));
+	enable() {
+		this.#addEventListeners();
+	}
 
-		this.canvas.addEventListener("contextmenu", (evt) => evt.preventDefault());
-		this.canvas.addEventListener("mouseup", () => this.dragging = false);
+	disable() {
+		this.#removeEventListeners();
+		this.selectedPoint = null;
+		this.hoveredPoint = null;
+	}
+
+	#addEventListeners() {
+		this.boundMouseDownHandleFunction = this.#handleMouseDown.bind(this);
+		this.boundMouseMoveHandleFunction = this.#handleMouveMove.bind(this);
+
+		this.boundMouseUp = () => this.dragging = false;
+		this.boundContextMenu = (evt) => evt.preventDefault();
+
+		this.canvas.addEventListener("mousedown", this.boundMouseDownHandleFunction );
+		this.canvas.addEventListener("mousemove", this.boundMouseMoveHandleFunction );
+
+		this.canvas.addEventListener("mouseup", this.boundMouseUp);
+		this.canvas.addEventListener("contextmenu", this.boundContextMenu);
+	}
+
+	#removeEventListeners() {
+		this.canvas.removeEventListener("mousedown", this.boundMouseDownHandleFunction);
+		this.canvas.removeEventListener("mousemove", this.boundMouseMoveHandleFunction);
+		this.canvas.removeEventListener("mouseup", this.boundMouseUp);
+		this.canvas.removeEventListener("contextmenu", this.boundContextMenu);
+		
 	}
 
 	#handleMouseDown(event) {
