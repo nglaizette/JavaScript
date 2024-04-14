@@ -25,7 +25,32 @@ class Building {
 			side1.distanceToPoint(viewPoint)
 		);
 
-		this.base.draw(ctx, { fill: "white", stroke: "#AAA"});
+		const baseMidPoints = [
+			averagePoint(this.base.points[0], this.base.points[1]),
+			averagePoint(this.base.points[2], this.base.points[3])
+		]
+
+		const topMidPoints = baseMidPoints.map((point)=>
+			getFake3dPoint(point, viewPoint, this.height)
+		);
+
+		const roofPolygons = [
+			new Polygon(
+				ceiling.points[0], ceiling.points[3],
+				topMidPoints[1], topMidPoints[0]
+			),
+			new Polygon(
+				ceiling.points[2], ceiling.points[1],
+				topMidPoints[0], topMidPoints[1]
+			),
+		];
+
+		roofPolygons.sort((a, b)=>
+			b.distanceToPoint(viewPoint) -
+			a.distanceToPoint(viewPoint)
+		);
+
+		this.base.draw(ctx, { fill: "white", stroke: "rgba(0, 0, 0, 0.2)", lineWidth: 20});
 		for(const side of sides){
 			side.draw(ctx, {fill: "while", stroke: "#AAA"});
 		}
