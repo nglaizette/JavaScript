@@ -9,9 +9,11 @@ class Stop {
 			translate(center, angle(directionVector), height / 2),
 			translate(center, angle(directionVector), -height / 2)
 		)
+
+		this.polygon = new Envelope(this.support, width, 0).polygon;
 	}
 
 	draw(ctx){
-		this.support.draw(ctx);
+		this.polygon.draw(ctx);
 	}
 }
