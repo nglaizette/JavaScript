@@ -48,7 +48,12 @@ class StopEditor {
 		if(segment) {
 			const projection = segment.projectPoint(this.mousePoint);
 			if(projection.offset >= 0 && projection.offset <= 1){
-				this.intent = projection.point;
+				this.intent = new Stop(
+					projection.point,
+					segment.directionVector(),
+					this.world.roadWidth,
+					this.world.roadWidth / 2
+				);
 			} else {
 				this.intent = null;
 			}

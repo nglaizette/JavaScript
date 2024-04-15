@@ -1,7 +1,7 @@
 class 	World {
 	constructor(
 		graph,
-		roadWith = 100,
+		roadWidth = 100,
 		roadRoundness = 10,
 		buildingWidth = 150,
 		buildingMinLength = 150,
@@ -9,7 +9,7 @@ class 	World {
 		treeSize = 160
 		) {
 			this.graph = graph;
-			this.roadWith = roadWith;
+			this.roadWidth = roadWidth;
 			this.roadRoundness = roadRoundness;
 			this.buildingWidth = buildingWidth;
 			this.buildingMinLength = buildingMinLength;
@@ -28,7 +28,7 @@ class 	World {
 		this.envelopes.length = 0;
 		for(const segment of this.graph.segments) {
 			this.envelopes.push(
-				new Envelope(segment, this.roadWith, this.roadRoundness)
+				new Envelope(segment, this.roadWidth, this.roadRoundness)
 			);
 		}
 
@@ -111,7 +111,7 @@ class 	World {
 			tmpEnvelopes.push(
 				new Envelope(
 					segment,
-					this.roadWith + this.buildingWidth + this.spacing * 2,
+					this.roadWidth + this.buildingWidth + this.spacing * 2,
 					this.roadRoundness
 				)
 			);
