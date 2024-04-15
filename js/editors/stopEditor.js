@@ -46,7 +46,12 @@ class StopEditor {
 		);
 
 		if(segment) {
-			this.intent = segment
+			const projection = segment.projectPoint(this.mousePoint);
+			if(projection.offset >= 0 && projection.offset <= 1){
+				this.intent = projection.point;
+			} else {
+				this.intent = null;
+			}
 		} else {
 			this.intent = null;
 		}
