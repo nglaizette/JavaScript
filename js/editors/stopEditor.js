@@ -41,7 +41,7 @@ class StopEditor {
 		this.mousePoint = this.viewport.getMousePoint(event, true);
 		let segment = getNearestSegment(
 			this.mousePoint, 
-			this.world.graph.segments,
+			this.world.laneGuides,
 			this.viewport.zoom * 10
 		);
 
