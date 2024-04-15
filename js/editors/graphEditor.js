@@ -42,7 +42,6 @@ class GraphEditor{
 		this.canvas.removeEventListener("mousemove", this.boundMouseMoveHandleFunction);
 		this.canvas.removeEventListener("mouseup", this.boundMouseUp);
 		this.canvas.removeEventListener("contextmenu", this.boundContextMenu);
-		
 	}
 
 	#handleMouseDown(event) {
@@ -76,6 +75,7 @@ class GraphEditor{
 			this.selectedPoint.y = this.mousePoint.y;
 		}
 	}
+	
 	#select(point) {
 		if(this.selectedPoint){
 			this.graph.tryAddSegment(new Segment(this.selectedPoint, point));
