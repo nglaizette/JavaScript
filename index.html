@@ -14,13 +14,15 @@
 		&nbsp;
 		<button id="graphBtn" onclick="setMode('graph')">🌐</button>
 		<button id="stopBtn" onclick="setMode('stop')">🛑</button>
-
+		<button id="crossingBtn" onclick="setMode('crossing')">🚶🏼</button>
 	</div>
 	<script src="js/world.js"></script>
 	<script src="js/viewport.js"></script>
 	<script src="js/markings/stop.js"></script>
+	<script src="js/markings/crossing.js"></script>
 	<script src="js/editors/graphEditor.js"></script>
 	<script src="js/editors/stopEditor.js"></script>
+	<script src="js/editors/crossingEditor.js"></script>
 	<script src="js/items/tree.js"></script>
 	<script src="js/items/building.js"></script>
 	<script src="js/maths/utils.js"></script>
@@ -45,6 +47,7 @@
 		const viewport = new Viewport(myCanvas);
 		const graphEditor = new GraphEditor(viewport, graph);
 		const stopEditor = new StopEditor(viewport, world);
+		const crossingEditor = new CrossingEditor(viewport, world);
 
 		let oldGraphHash = graph.hash();
 		setMode("graph");
@@ -61,6 +64,7 @@
 			ctx.globalAlpha = 0.3;
 			graphEditor.display();
 			stopEditor.display();
+			crossingEditor.display();
 			requestAnimationFrame(animate);
 		}
 
@@ -87,6 +91,12 @@
 					stopBtn.style.filter = "";
 					stopEditor.enable();
 					break;
+
+				case "crossing":
+					crossingBtn.style.backgroundColor = "white";
+					crossingBtn.style.filter = "";
+					crossingEditor.enable();
+					break;
 			}
 		}
 
@@ -97,6 +107,9 @@
 			stopBtn.style.backgroundColor = "gray";
 			stopBtn.style.filter = "grayscale(100%)";
 			stopEditor.disable();
+			crossingBtn.style.backgroundColor = "gray";
+			crossingBtn.style.filter = "grayscale(100%)";
+			crossingEditor.disable();
 		}
 	</script>
 </html>
