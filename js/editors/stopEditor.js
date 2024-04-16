@@ -51,8 +51,8 @@ class StopEditor {
 				this.intent = new Stop(
 					projection.point,
 					segment.directionVector(),
-					this.world.roadWidth,
-					this.world.roadWidth / 2
+					this.world.roadWidth / 2.0,
+					this.world.roadWidth / 2.0
 				);
 			} else {
 				this.intent = null;
