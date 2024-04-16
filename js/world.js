@@ -22,6 +22,8 @@ class 	World {
 			this.trees = [];
 			this.laneGuides = [];
 
+			this.markings = [];
+
 			this.generate();
 		}
 
@@ -193,6 +195,9 @@ class 	World {
 	draw(ctx, viewPoint) {
 		for (const envelope of this.envelopes){
 			envelope.draw(ctx, {fill: "#BBB", stroke: "#BBB", lineWidth: 15});
+		}
+		for(const marking of this.markings){
+			marking.draw(ctx);
 		}
 		for (const segment of this.graph.segments) {
 			segment.draw(ctx, { color: "white", width: 4, dash: [10, 10] });

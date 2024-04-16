@@ -8,6 +8,8 @@ class StopEditor {
 
 		this.mouse = null;
 		this.intent = null;
+
+		this.markings = world.markings;
 	}
 
 	enable() {
@@ -63,7 +65,12 @@ class StopEditor {
 	}
 
 	#handleMouseDown(event){
-
+		if(event.button == 0) { // left click
+			if(this.intent) {
+				this.markings.push(this.intent);
+				this.intent = null;
+			}
+		}
 	}
 
 	display(){
