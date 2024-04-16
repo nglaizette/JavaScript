@@ -6,7 +6,7 @@ class StopEditor {
 		this.canvas = viewport.canvas;
 		this.ctx = this.canvas.getContext("2d");
 
-		this.mouse = null;
+		this.mousePoint = null;
 		this.intent = null;
 
 		this.markings = world.markings;
@@ -69,6 +69,16 @@ class StopEditor {
 			if(this.intent) {
 				this.markings.push(this.intent);
 				this.intent = null;
+			}
+		}
+
+		if(event.button == 2) { // right click
+			for(let i = 0; i < this.markings.length; i++){
+				const polygon = this.markings[i].polygon;
+				if(polygon.containsPoint(this.mousePoint)){
+					this.markings.splice(i, 1);
+					return;
+				}
 			}
 		}
 	}
