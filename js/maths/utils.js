@@ -58,6 +58,10 @@ function magnitude(vector){
 	return Math.hypot(vector.x, vector.y);
 }
 
+function perpendicular(vector) {
+	return new Point(-vector.y, vector.x);
+}
+
 function translate(loc, angle, offset) {
 	return new Point(
 		loc.x + Math.cos(angle) * offset,
