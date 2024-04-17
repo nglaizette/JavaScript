@@ -24,6 +24,8 @@ class 	World {
 
 			this.markings = [];
 
+			this.frameCount = 0;
+
 			this.generate();
 		}
 
@@ -67,7 +69,7 @@ class 	World {
 			...this.buildings.map( (building) => building.base.points).flat(),
 		];
  
-		const left = Math.min(...points.map((p) => p.x));
+		const left = Math.min(...points.map((point) => point.x));
 		const right = Math.max(...points.map((point) => point.x));
 		const top = Math.min(...points.map((point) => point.y));
 		const bottom = Math.max(...points.map((point) => point.y));
@@ -75,7 +77,7 @@ class 	World {
 		// récupéreation de tous les polygones créés
 		const illegalPolygons = [
 			...this.buildings.map((building) => building.base),
-			...this.envelopes.map((envelope) => envelope.polygon)
+			...this.envelopes.map((envelope) => envelope.polygon),
 		];
 
 		const trees = [];
@@ -99,7 +101,7 @@ class 	World {
 			// check if tree too close to other trees
 			if(keep) {
 				for(const tree of trees){
-					if(distance(tree.center, point) < this.treeSize * 2) {
+					if(distance(tree.center, point) < this.treeSize) {
 						keep = false;
 						break;
 					}
@@ -192,7 +194,67 @@ class 	World {
 		return bases.map((base) => new Building(base));
 	}
 
+	#getIntersections() {
+		const subset = [];
+		for(const point of this.graph.points){
+			let degree = 0;
+			for (const segment of this.graph.segments){
+				if(segment.includes(point)){
+					degree++;
+				}
+			}
+
+			if(degree > 2){
+				subset.push(point);
+			}
+			return subset;
+		}
+	}
+
+	#updateLights(){
+		const lights = this.markings.filter((m) => m instanceof Light);
+
+		const controlCenters = [];
+		for(const light of lights){
+			const point = getNearestPoint(light.center, this.#getIntersections());
+			let controlCenter = controlCenters.find((c) => c.equals(point));
+			if(!controlCenter) {
+				controlCenter = new Point(point.x, point.y);
+				controlCenter.lights = [light];
+				controlCenters.push(controlCenter);
+			} else {
+				controlCenter.lights.push(light);
+			}
+		}
+
+		const greenDuration = 2;
+		const yellowDuration = 1;
+
+		for(const center of controlCenters){
+			center.ticks = center.lights.length * (greenDuration +  yellowDuration);
+		}
+
+		const tick = Math.floor(this.frameCount / 60);
+
+		for(const center of controlCenters){
+			const centerTick = tick % center.ticks;
+			const greenYellowIndex = Math.floor(centerTick / (greenDuration + yellowDuration));
+			const greenYellowState = centerTick % (greenDuration + yellowDuration) < greenDuration ? "green" : "yellow";
+
+			for(let i = 0; i < center.lights.length; i++){
+				if(i == greenYellowIndex){
+					center.lights[i].state = greenYellowState;
+				} else {
+					center.lights[i].state = "red";
+				}
+			}
+		}
+		this.frameCount++;
+	}
+
 	draw(ctx, viewPoint) {
+		this.#updateLights();
+
 		for (const envelope of this.envelopes){
 			envelope.draw(ctx, {fill: "#BBB", stroke: "#BBB", lineWidth: 15});
 		}
