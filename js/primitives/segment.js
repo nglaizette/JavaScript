@@ -46,10 +46,11 @@ class Segment {
 		return proj;
 	}
 
-	draw(ctx, {width = 2, color = "black", dash = []} = {}) {
+	draw(ctx, {width = 2, color = "black", dash = [], cap = "butt"} = {}) {
 		ctx.beginPath();
 		ctx.lineWidth = width;
 		ctx.strokeStyle = color;
+		ctx.lineCap = cap;
 		ctx.setLineDash(dash);
 		ctx.moveTo(this.point1.x, this.point1.y);
 		ctx.lineTo(this.point2.x, this.point2.y);
