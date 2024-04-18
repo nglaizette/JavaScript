@@ -5,6 +5,7 @@ class Crossing extends Marking{
 			this.polygon.segments[0],
 			this.polygon.segments[2]
 		];
+		this.type = "crossing";
 	}
 
 	draw(ctx) {

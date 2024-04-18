@@ -1,6 +1,8 @@
 class Target extends Marking{
 	constructor(center, directionVector, width, heigth){
 		super(center, directionVector, width, heigth);
+
+		this.type = "target";
 	}
 
 	draw(ctx) {

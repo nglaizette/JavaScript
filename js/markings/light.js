@@ -4,6 +4,8 @@ class Light extends Marking{
 
 		this.state = "green";
 		this.border = this.polygon.segments[0];
+
+		this.type = "light";
 	}
 
 	draw() {
