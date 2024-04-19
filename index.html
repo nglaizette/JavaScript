@@ -70,7 +70,7 @@
 		let world = worldInfo ? World.load(worldInfo) : new World(new Graph());
 		const graph = world.graph;
 		
-		const viewport = new Viewport(myCanvas);
+		const viewport = new Viewport(myCanvas, world.zoom, world.offset);
 		const tools = {
 			graph: { button: graphBtn, editor: new GraphEditor(viewport, graph)},
 			stop: { button: stopBtn, editor: new StopEditor(viewport, world)},
@@ -107,6 +107,9 @@
 		}
 
 		function save(){
+			world.zoom = viewport.zoom;
+			world.offset = viewport.offset;
+
 			const element = document.createElement("a");
 			element.setAttribute(
 				"href",
@@ -137,7 +140,7 @@
 				const jsonData = JSON.parse(fileContent);
 				world = World.load(jsonData);
 				localStorage.setItem("world", JSON.stringify(world));
-				localStorage.reload();
+				location.reload();
 			}
 		}
 

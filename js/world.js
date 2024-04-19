@@ -45,6 +45,10 @@ class 	World {
 		world.laneGuides = info.laneGuides.map((l) => new Segment(l.point1, l.point2));
 		world.trees = info.trees.map((t)=> new Tree(t.center, info.treeSize));
 		world.markings = info.markings.map((m) => Marking.load(m));
+
+		world.zoom = info.zoom;
+		world.offset = info.offset;
+		
 		return world;
 	};
 
